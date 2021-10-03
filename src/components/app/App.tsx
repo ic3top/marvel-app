@@ -8,7 +8,7 @@ import {AppBanner} from "../appBanner/AppBanner";
 import {ComicsList} from "../comicsList/ComicsList";
 import {SingleComic} from "../singleComic/singleComic";
 
-import {HashRouter as Router, Route, Switch} from "react-router-dom";
+import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import bgHero from '../../resources/images/bg-hero.png';
 
@@ -21,6 +21,7 @@ function App() {
                 <main>
                     <Switch>
                         <Route exact path="/">
+                            <Redirect to="/characters"/>
                         </Route>
                         <Route path="/characters">
                             <RandomChar/>
