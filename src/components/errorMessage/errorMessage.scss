@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.app__error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  span {
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  p {
+    color: $grey;
+    font-weight: 500;
+    font-size: 24px;
+    margin-top: 15px;
+    text-transform: uppercase;
+  }
+}
