@@ -13,7 +13,6 @@ export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
     const marvelService = new MarvelService();
 
     useEffect(() => {
-        loadChars();
         const windowOnScroll = () => {
             const {
                 scrollTop,
@@ -25,17 +24,17 @@ export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
                 loadChars();
             }
         }
-        window.addEventListener('scroll', windowOnScroll);
+        loadChars().then(() => window.addEventListener('scroll', windowOnScroll));
 
         return () => {
             window.removeEventListener('scroll', windowOnScroll);
         }
     }, []);
 
-    function loadChars() {
-        if (isLoading) return;
+    function loadChars(): Promise<void> {
+        if (isLoading) return new Promise((resolve, reject) => resolve());
         setIsLoading(true);
-        marvelService.getAllCharacters(CHARS_OFFSET)
+        return marvelService.getAllCharacters(CHARS_OFFSET)
             .then(onCharListLoaded)
             .finally(() => {
                 CHARS_OFFSET += 9;
@@ -59,8 +58,14 @@ export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
         return (
             <li
                 className={`char__item${selectedCharId === ch.id ? " char__item_selected" : ""}`}
+                tabIndex={0}
                 key={ch.id}
                 onClick={() => onSelectChar(ch.id)}
+                onKeyPress={(e) => {
+                    if (e.key === ' ' || e.key === "Enter") {
+                        onSelectChar(ch.id);
+                    }
+                }}
             >
                 <img
                     src={ch.thumbnail.path + '.' + ch.thumbnail.extension}
