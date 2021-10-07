@@ -14,6 +14,9 @@ export const useHttp = () => {
         try {
             const response = await fetch(url, {method, body, headers});
             const data = await response.json();
+            if (data.code === 404) {
+                throw Error(data.status);
+            }
             setLoading(false);
 
             return data;

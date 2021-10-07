@@ -19,7 +19,7 @@ export const ComicsList = () => {
     const onRequest = (offset?: number) => {
         getAllComics(offset)
             .then(newComics => setComics((prev) => [...prev, ...newComics]))
-            .finally(() => setOffset(prevOffset => prevOffset + 9));
+            .finally(() => setOffset(prevOffset => prevOffset + 8));
     }
 
     const renderComics = (arr: Comic[]) => {
@@ -47,7 +47,7 @@ export const ComicsList = () => {
                 {errorMessage}
                 {skeleton}
             </ul>
-            {!loading && <button className="button button__main button__long" onClick={() => onRequest()}>
+            {!loading && <button className="button button__main button__long" onClick={() => onRequest(offset)}>
               <div className="inner">load more</div>
             </button>}
         </div>

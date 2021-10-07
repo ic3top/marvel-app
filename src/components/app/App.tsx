@@ -1,7 +1,6 @@
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {AppHeader} from "../appHeader/AppHeader";
-import {SingleComic} from "../singleComic/singleComic";
-import {ComicsPage, MainPage} from "../../pages";
+import {ComicsPage, MainPage, SingleComicPage} from "../../pages";
 
 function App() {
     return (
@@ -19,8 +18,8 @@ function App() {
                         <Route exact path="/comics">
                             <ComicsPage/>
                         </Route>
-                        <Route path="/comics/:id">
-                            <SingleComic/>
+                        <Route path="/comics/:comicId">
+                            <SingleComicPage/>
                         </Route>
                     </Switch>
                 </main>

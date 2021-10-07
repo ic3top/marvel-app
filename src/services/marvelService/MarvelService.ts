@@ -31,6 +31,20 @@ export const useMarvelService = () => {
             .then(res => res.data.results);
     }
 
-    return {loading, error, clearError, getAllCharacters, getCharacterById, getRandomCharacter, getAllComics};
+    const getComicById = async (id: string | number): Promise<Comic> => {
+        return request<AllComicsRes>(`${baseUrl}/comics/${id}?${apiKey}`)
+            .then(res => res.data.results[0]);
+    }
+
+    return {
+        loading,
+        error,
+        clearError,
+        getAllCharacters,
+        getCharacterById,
+        getRandomCharacter,
+        getAllComics,
+        getComicById
+    };
 }
 
