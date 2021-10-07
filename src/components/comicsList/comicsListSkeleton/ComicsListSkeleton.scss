@@ -1,0 +1,14 @@
+.skeleton {
+  &__comics-img {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    width: 225px;
+    height: 345px;
+    background-color: #C4C4C4;
+  }
+  &__comics-title {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    background-color: #C4C4C4;
+  }
+}

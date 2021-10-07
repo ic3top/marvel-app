@@ -1,14 +1,5 @@
-enum UrlTypes {
-    detail = "detail",
-    wiki = "wiki",
-    comicLink = "comicLink",
-    homePage = 'homePage'
-}
-
-interface Url {
-    type: UrlTypes,
-    url: string
-}
+import {Url} from "./Url";
+import {Image} from "./Image";
 
 interface ComicSummary {
     /** resourceURI (string, optional): The path to the individual comic resource., */
@@ -26,13 +17,6 @@ interface ComicsList {
     collectionURI?: string;
     /** items (Array[ComicSummary], optional): The list of returned issues in this collection */
     items?: ComicSummary[];
-}
-
-interface Image {
-    /** path (string, optional): The directory path of to the image., */
-    path?: string
-    /** extension (string, optional): The file extension for the image. */
-    extension?: string
 }
 
 // TODO

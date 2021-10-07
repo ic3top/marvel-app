@@ -1,4 +1,4 @@
-import {Character} from "../../../models/Caracter";
+import {Character} from "./Caracter";
 import {DefaultRes} from "./DefaultRes";
 
 export interface AllCharactersRes extends DefaultRes {
