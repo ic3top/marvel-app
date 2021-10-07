@@ -2,7 +2,7 @@ import "./charInfo.scss";
 import { Skeleton } from "../skeleton/Skeleton";
 import {useEffect, useState} from "react";
 import {Character} from "../../models/Caracter";
-import {MarvelService} from "../../services/marvelService/MarvelService";
+import {useMarvelService} from "../../services/marvelService/MarvelService";
 import {ErrorMessage} from "../errorMessage/ErrorMessage";
 
 interface CharInfoProps {
@@ -11,32 +11,28 @@ interface CharInfoProps {
 
 export const CharInfo = ({ charId }: CharInfoProps) => {
     const [character, setCharacter] = useState<Character | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
+    const { getCharacterById, loading, error, clearError } = useMarvelService();
 
-    const skeleton = !isLoading || hasError ? null : <Skeleton/>;
-    const errorMessage = hasError ? <ErrorMessage/> : null;
-    const content = !(isLoading || hasError || !character) ? <View char={character}/> : null;
-
-    const marvelService = new MarvelService();
+    const skeleton =  !loading || error ? null : <Skeleton/>;
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const content = !(loading || error || !character) ? <View char={character}/> : null;
 
     useEffect(() => {
         if (charId) {
-            setIsLoading(true);
-            setHasError(false);
-            marvelService.getCharacterById(charId)
+            clearError();
+            getCharacterById(charId)
                 .then(setCharacter)
-                .catch(() => setHasError(true))
-                .finally(() => setIsLoading(false));
         }
     }, [charId]);
 
     return (
-        <div className="char__info">
-            {skeleton}
-            {errorMessage}
-            {content}
-        </div>
+        <>
+            {charId && <div className="char__info">
+                {skeleton}
+                {errorMessage}
+                {content}
+            </div>}
+        </>
     )
 }
 
@@ -71,6 +67,7 @@ const View = ({char}: { char: Character }) => {
               <ul className="char__comics-list">
                   {
                       char.comics.items?.map((item, i) => {
+                          // eslint-disable-next-line array-callback-return
                           if (i > 9) return;
                           return (
                               <li className="char__comics-item" key={i}>{item.name}</li>

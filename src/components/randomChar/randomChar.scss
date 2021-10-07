@@ -1,6 +1,7 @@
 @import "../../styles/variables";
 
 .random-char {
+  min-height: 255px;
   margin-top: 50px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
   display: grid;

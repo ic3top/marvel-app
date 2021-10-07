@@ -1,6 +1,6 @@
 import "./charList.scss";
 import {useEffect, useState} from "react";
-import {MarvelService} from "../../services/marvelService/MarvelService";
+import {useMarvelService} from "../../services/marvelService/MarvelService";
 import {Character} from "../../models/Caracter";
 import {CharListSkeleton} from "./charListSkeleton/CharListSkeleton";
 
@@ -8,9 +8,8 @@ let CHARS_OFFSET: number = 210;
 
 export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
     const [chars, setChars] = useState<Character[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [selectedCharId, setSelectedCharId] = useState<number | null>(null)
-    const marvelService = new MarvelService();
+    const { loading, getAllCharacters } = useMarvelService();
 
     useEffect(() => {
         const windowOnScroll = () => {
@@ -32,13 +31,11 @@ export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
     }, []);
 
     function loadChars(): Promise<void> {
-        if (isLoading) return new Promise((resolve, reject) => resolve());
-        setIsLoading(true);
-        return marvelService.getAllCharacters(CHARS_OFFSET)
+        if (loading) return new Promise((resolve, reject) => resolve());
+        return getAllCharacters(CHARS_OFFSET)
             .then(onCharListLoaded)
             .finally(() => {
                 CHARS_OFFSET += 9;
-                setIsLoading(false)
             });
     }
 
@@ -81,7 +78,7 @@ export const  CharList = ({selectChar}: {selectChar: (id: number) => void}) => {
         <div className="char__list">
             <ul className="char__grid">
                 {charsContent}
-                {isLoading && <CharListSkeleton/>}
+                {loading && <CharListSkeleton/>}
             </ul>
         </div>
     )

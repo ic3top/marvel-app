@@ -2,7 +2,7 @@ import "./randomChar.scss";
 
 import thorWeaponImg from "../../resources/images/thor-weapon.png";
 import {Character} from "../../models/Caracter";
-import {MarvelService} from "../../services/marvelService/MarvelService";
+import {useMarvelService} from "../../services/marvelService/MarvelService";
 import {useEffect, useState} from "react";
 import {Loader} from "../loader/Loader";
 import {ErrorMessage} from "../errorMessage/ErrorMessage";
@@ -32,26 +32,20 @@ const RandomCharView = ({char}: {char: Character}) => {
 
 export const RandomChar = () => {
     const [character, setCharacter] = useState({} as Character);
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasError, setHasError] = useState(false);
-    const marvelService = new MarvelService();
+    const { getRandomCharacter, loading, error, clearError } = useMarvelService();
 
     function fetchRandomCharacter() {
-        setHasError(false);
-        setIsLoading(true);
-        marvelService.getRandomCharacter()
-            .then(setCharacter)
-            .catch(() => setHasError(true))
-            .finally(() => setIsLoading(false));
+        clearError();
+        getRandomCharacter().then(setCharacter);
     }
 
     useEffect(() => {
         fetchRandomCharacter();
     }, []);
 
-    const errorMessage = hasError ? <ErrorMessage/> : null;
-    const loader = isLoading ? <Loader/> : null;
-    const content = !(isLoading || hasError) ? <RandomCharView char={character}/>: null;
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const loader = loading ? <Loader/> : null;
+    const content = !(loading || error) ? <RandomCharView char={character}/>: null;
 
     return (
         <div className="random-char">
