@@ -1,6 +1,6 @@
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {AppHeader} from "../appHeader/AppHeader";
-import {ComicsPage, MainPage, SingleComicPage} from "../../pages";
+import {ComicsPage, MainPage, NotFoundPage, SingleComicPage} from "../../pages";
 
 function App() {
     return (
@@ -12,7 +12,7 @@ function App() {
                         <Route exact path="/">
                             <Redirect to="/characters"/>
                         </Route>
-                        <Route path="/characters">
+                        <Route exact path="/characters">
                             <MainPage/>
                         </Route>
                         <Route exact path="/comics">
@@ -20,6 +20,9 @@ function App() {
                         </Route>
                         <Route path="/comics/:comicId">
                             <SingleComicPage/>
+                        </Route>
+                        <Route>
+                            <NotFoundPage/>
                         </Route>
                     </Switch>
                 </main>
