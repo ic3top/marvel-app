@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/marvel-app/static/css/main.dc402377.chunk.css",
-    "main.js": "/marvel-app/static/js/main.7f5cfa39.chunk.js",
-    "main.js.map": "/marvel-app/static/js/main.7f5cfa39.chunk.js.map",
+    "main.js": "/marvel-app/static/js/main.68e46272.chunk.js",
+    "main.js.map": "/marvel-app/static/js/main.68e46272.chunk.js.map",
     "runtime-main.js": "/marvel-app/static/js/runtime-main.5c7da358.js",
     "runtime-main.js.map": "/marvel-app/static/js/runtime-main.5c7da358.js.map",
-    "static/js/2.19b2da34.chunk.js": "/marvel-app/static/js/2.19b2da34.chunk.js",
-    "static/js/2.19b2da34.chunk.js.map": "/marvel-app/static/js/2.19b2da34.chunk.js.map",
+    "static/js/2.206bc655.chunk.js": "/marvel-app/static/js/2.206bc655.chunk.js",
+    "static/js/2.206bc655.chunk.js.map": "/marvel-app/static/js/2.206bc655.chunk.js.map",
     "index.html": "/marvel-app/index.html",
     "static/css/main.dc402377.chunk.css.map": "/marvel-app/static/css/main.dc402377.chunk.css.map",
-    "static/js/2.19b2da34.chunk.js.LICENSE.txt": "/marvel-app/static/js/2.19b2da34.chunk.js.LICENSE.txt",
+    "static/js/2.206bc655.chunk.js.LICENSE.txt": "/marvel-app/static/js/2.206bc655.chunk.js.LICENSE.txt",
     "static/media/avengers.c29e0ef0.png": "/marvel-app/static/media/avengers.c29e0ef0.png",
     "static/media/avengers_logo.9b944f71.png": "/marvel-app/static/media/avengers_logo.9b944f71.png",
     "static/media/bg-hero.4d6f9671.png": "/marvel-app/static/media/bg-hero.4d6f9671.png",
@@ -18,8 +18,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.5c7da358.js",
-    "static/js/2.19b2da34.chunk.js",
+    "static/js/2.206bc655.chunk.js",
     "static/css/main.dc402377.chunk.css",
-    "static/js/main.7f5cfa39.chunk.js"
+    "static/js/main.68e46272.chunk.js"
   ]
 }
