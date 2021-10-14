@@ -1,5 +1,3 @@
-import {SingleComic} from "../../components/singleComic/singleComic";
+import { SingleComic } from '../../components/singleComic/singleComic';
 
-export const SingleComicPage = () => {
-  return <SingleComic/>
-}
+export const SingleComicPage = () => <SingleComic />;

@@ -1,5 +1,5 @@
-import {Character} from "./Caracter";
-import {DefaultRes} from "./DefaultRes";
+import { Character } from './Caracter';
+import { DefaultRes } from './DefaultRes';
 
 export interface AllCharactersRes extends DefaultRes {
     data: {

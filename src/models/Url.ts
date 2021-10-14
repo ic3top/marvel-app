@@ -1,7 +1,7 @@
 enum UrlTypes {
-    detail = "detail",
-    wiki = "wiki",
-    comicLink = "comicLink",
+    detail = 'detail',
+    wiki = 'wiki',
+    comicLink = 'comicLink',
     homePage = 'homePage'
 }
 

@@ -1,5 +1,5 @@
-import {Url} from "./Url";
-import {Image} from "./Image";
+import { Url } from './Url';
+import { Image } from './Image';
 
 interface ComicSummary {
     /** resourceURI (string, optional): The path to the individual comic resource., */

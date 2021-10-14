@@ -1,7 +1,7 @@
-import {Url} from "./Url";
-import {Image} from "./Image";
+import { Url } from './Url';
+import { Image } from './Image';
 
-interface  TextObject {
+interface TextObject {
     text: string,
     language: string
 }
@@ -12,7 +12,7 @@ interface SeriesSummary {
 }
 
 interface ComicPrice {
-    type: "printPrice" | "digitalPrice",
+    type: 'printPrice' | 'digitalPrice',
     price: number
 }
 
@@ -30,22 +30,22 @@ interface StoryList {
 }
 
 export interface Comic {
-    "id": number,
-    "digitalId": number,
-    "title": string,
-    "variantDescription": string,
-    "description"?: string,
-    "modified": Date,
-    "pageCount": number,
+    'id': number,
+    'digitalId': number,
+    'title': string,
+    'variantDescription': string,
+    'description'?: string,
+    'modified': Date,
+    'pageCount': number,
     textObjects: TextObject[],
-    "resourceURI": string,
-    "urls": Url[],
-    "series": SeriesSummary,
-    "prices": ComicPrice[],
-    "thumbnail": {
-        "path": "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
-        "extension": "jpg"
+    'resourceURI': string,
+    'urls': Url[],
+    'series': SeriesSummary,
+    'prices': ComicPrice[],
+    'thumbnail': {
+        'path': 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available',
+        'extension': 'jpg'
     },
-    "images": Image[],
-    "stories": StoryList,
+    'images': Image[],
+    'stories': StoryList,
 }
