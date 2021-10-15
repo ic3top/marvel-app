@@ -6,7 +6,8 @@ import './singleComic.scss';
 import { Helmet } from 'react-helmet';
 import { Comic } from '../../models/Comic';
 import { useMarvelService } from '../../services/marvelService/MarvelService';
-import { ErrorMessage } from '../errorMessage/ErrorMessage';
+import { setContent } from '../../utils/setContent';
+import { CurrentStage } from '../../hooks/http.hook';
 import { Loader } from '../loader/Loader';
 
 const ComicView = ({ comic }: { comic: Comic }) => (
@@ -24,22 +25,17 @@ const ComicView = ({ comic }: { comic: Comic }) => (
       <p className="single-comic__descr">{comic.description}</p>
       <p className="single-comic__descr">
         {comic.pageCount}
-        {' '}
         pages.
       </p>
       <p className="single-comic__descr">
         Language:
-        {comic.textObjects?.[0].language}
+        {comic.textObjects?.[0]?.language}
       </p>
       {comic.prices?.map((i) => {
         if (!i.type || !i.price) return;
         return (
           <div className="single-comic__price">
-            {i.type}
-            :
-            {' '}
-            {i.price}
-            $
+            {i.type}:{i.price}$
           </div>
         );
       })}
@@ -52,21 +48,17 @@ export const SingleComic = () => {
   const { comicId } = useParams<{comicId: string}>();
   const [comic, setComic] = useState<Comic>({} as Comic);
   const {
-    getComicById, error, loading, clearError,
+    getComicById, clearError, stage, setStage,
   } = useMarvelService();
 
   useEffect(() => {
     clearError();
-    getComicById(comicId).then(setComic);
+    getComicById(comicId).then(setComic).finally(() => setStage(CurrentStage.Confirmed));
   }, [comicId]);
-
-  const content = !error && !loading ? <ComicView comic={comic} /> : null;
 
   return (
     <>
-      {content}
-      {loading && <Loader />}
-      {error && <ErrorMessage />}
+      {setContent(stage, () => <ComicView comic={comic} />, Loader)}
     </>
   );
 };

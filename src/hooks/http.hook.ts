@@ -1,8 +1,13 @@
 import { useState, useCallback } from 'react';
 
+export enum CurrentStage {
+  Error = 'ERROR',
+  Confirmed = 'CONFIRMED',
+  Loading = 'LOADING',
+}
+
 export const useHttp = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
+  const [stage, setStage] = useState<CurrentStage>(CurrentStage.Loading);
 
   const request = useCallback(async <ResType>(
     url: string,
@@ -10,28 +15,29 @@ export const useHttp = () => {
     body = null,
     headers:{[key: string]: string} = { 'Content-Type': 'application/json' },
   ): Promise<ResType> => {
-    setLoading(true);
+    setStage(CurrentStage.Loading);
+
     try {
       const response = await fetch(url, { method, body, headers });
       const data = await response.json();
       if (data.code === 404) {
         throw Error(data.status);
       }
-      setLoading(false);
 
       return data;
     } catch (e) {
-      setLoading(false);
       if (e instanceof Error) {
-        setError(e.message);
+        setStage(CurrentStage.Error);
       }
       throw e;
     }
   }, []);
 
-  const clearError = useCallback(() => setError(null), []);
+  const clearError = useCallback(() => {
+    setStage(CurrentStage.Loading);
+  }, []);
 
   return {
-    loading, request, error, clearError,
+    request, clearError, stage, setStage,
   };
 };

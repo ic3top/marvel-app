@@ -5,7 +5,8 @@ import thorWeaponImg from '../../resources/images/thor-weapon.png';
 import { Character } from '../../models/Caracter';
 import { useMarvelService } from '../../services/marvelService/MarvelService';
 import { Loader } from '../loader/Loader';
-import { ErrorMessage } from '../errorMessage/ErrorMessage';
+import { setContent } from '../../utils/setContent';
+import { CurrentStage } from '../../hooks/http.hook';
 
 const RandomCharView = ({ char }: {char: Character}) => {
   const {
@@ -35,27 +36,21 @@ const RandomCharView = ({ char }: {char: Character}) => {
 export const RandomChar = () => {
   const [character, setCharacter] = useState({} as Character);
   const {
-    getRandomCharacter, loading, error, clearError,
+    getRandomCharacter, clearError, stage, setStage,
   } = useMarvelService();
 
   function fetchRandomCharacter() {
     clearError();
-    getRandomCharacter().then(setCharacter);
+    getRandomCharacter().then(setCharacter).then(() => setStage(CurrentStage.Confirmed));
   }
 
   useEffect(() => {
     fetchRandomCharacter();
   }, []);
 
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const loader = loading ? <Loader /> : null;
-  const content = !(loading || error) ? <RandomCharView char={character} /> : null;
-
   return (
     <div className="random-char">
-      {errorMessage}
-      {loader}
-      {content}
+      {setContent(stage, () => <RandomCharView char={character} />, Loader)}
       <div className="random-char__right">
         <div className="random-char__title title title_fs-24 title_white">
           Random character for today!

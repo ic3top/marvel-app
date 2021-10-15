@@ -6,7 +6,7 @@ import { Comic } from '../../models/Comic';
 
 export const useMarvelService = () => {
   const {
-    loading, request, error, clearError,
+    request, clearError, stage, setStage,
   } = useHttp();
   const baseUrl = 'https://gateway.marvel.com:443/v1/public';
   const apiKey = process.env.REACT_APP_API_KEY;
@@ -33,9 +33,9 @@ export const useMarvelService = () => {
     .then((res) => res.data.results[0]);
 
   return {
-    loading,
-    error,
     clearError,
+    stage,
+    setStage,
     getAllCharacters,
     getCharacterById,
     getRandomCharacter,

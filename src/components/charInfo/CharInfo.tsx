@@ -1,29 +1,26 @@
 import './charInfo.scss';
 import { useEffect, useState } from 'react';
-import { Skeleton } from '../skeleton/Skeleton';
 import { Character } from '../../models/Caracter';
 import { useMarvelService } from '../../services/marvelService/MarvelService';
-import { ErrorMessage } from '../errorMessage/ErrorMessage';
+import { CurrentStage } from '../../hooks/http.hook';
+import { setContent } from '../../utils/setContent';
 
 interface CharInfoProps {
     charId?: number;
 }
 
 export const CharInfo = ({ charId }: CharInfoProps) => {
-  const [character, setCharacter] = useState<Character | null>(null);
+  const [character, setCharacter] = useState<Character>({} as Character);
   const {
-    getCharacterById, loading, error, clearError,
+    getCharacterById, clearError, stage, setStage,
   } = useMarvelService();
-
-  const skeleton = !loading || error ? null : <Skeleton />;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const content = !(loading || error || !character) ? <View char={character} /> : null;
 
   useEffect(() => {
     if (charId) {
       clearError();
       getCharacterById(charId)
-        .then(setCharacter);
+        .then(setCharacter)
+        .then(() => setStage(CurrentStage.Confirmed));
     }
   }, [charId]);
 
@@ -31,9 +28,7 @@ export const CharInfo = ({ charId }: CharInfoProps) => {
     <>
       {charId && (
       <div className="char__info">
-        {skeleton}
-        {errorMessage}
-        {content}
+        {setContent(stage, () => <View char={character} />)}
       </div>
       )}
     </>

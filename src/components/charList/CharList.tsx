@@ -1,16 +1,19 @@
 import './charList.scss';
 import { useEffect, useState } from 'react';
-import { useMarvelService } from '../../services/marvelService/MarvelService';
 import { Character } from '../../models/Caracter';
+import { useMarvelService } from '../../services/marvelService/MarvelService';
 import { CharListSkeleton } from './charListSkeleton/CharListSkeleton';
+import { CurrentStage } from '../../hooks/http.hook';
+import { setContent } from '../../utils/setContent';
 
 let CHARS_OFFSET: number = 210;
 
-// eslint-disable-next-line no-unused-vars
 export const CharList = ({ selectChar }: {selectChar: (id: number) => void}) => {
   const [chars, setChars] = useState<Character[]>([]);
   const [selectedCharId, setSelectedCharId] = useState<number | null>(null);
-  const { loading, getAllCharacters } = useMarvelService();
+  const {
+    stage, setStage, getAllCharacters,
+  } = useMarvelService();
 
   useEffect(() => {
     const windowOnScroll = () => {
@@ -24,7 +27,8 @@ export const CharList = ({ selectChar }: {selectChar: (id: number) => void}) => 
         loadChars();
       }
     };
-    loadChars().then(() => window.addEventListener('scroll', windowOnScroll));
+    loadChars()
+      .then(() => window.addEventListener('scroll', windowOnScroll));
 
     return () => {
       window.removeEventListener('scroll', windowOnScroll);
@@ -32,11 +36,11 @@ export const CharList = ({ selectChar }: {selectChar: (id: number) => void}) => 
   }, []);
 
   function loadChars(): Promise<void> {
-    if (loading) return new Promise((resolve) => resolve());
     return getAllCharacters(CHARS_OFFSET)
       .then(onCharListLoaded)
       .finally(() => {
         CHARS_OFFSET += 9;
+        setStage(CurrentStage.Confirmed);
       });
   }
 
@@ -76,8 +80,12 @@ export const CharList = ({ selectChar }: {selectChar: (id: number) => void}) => 
   return (
     <div className="char__list">
       <ul className="char__grid">
-        {charsContent}
-        {loading && <CharListSkeleton />}
+        {setContent(stage, () => <>{charsContent}</>, () => (
+          <>
+            {charsContent}
+            <CharListSkeleton />
+          </>
+        ))}
       </ul>
     </div>
   );
